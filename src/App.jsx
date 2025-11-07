@@ -1,28 +1,47 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
+import SceneBackground from './components/SceneBackground';
+import TitleSlide from './components/TitleSlide';
+import StoryEditor from './components/StoryEditor';
+import SlideViewer from './components/SlideViewer';
+import HeroCharacter from './components/HeroCharacter';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [slides, setSlides] = useState([
+    { kind: 'cover', title: 'Princess of Starlight', subtitle: 'Cerah & Kontras' },
+    { kind: 'story', index: 1, text: 'Di bawah aurora, takdir baru mulai berpendar.', mood: 'Neon Bloom' },
+    { kind: 'end', title: 'Tamat' },
+  ]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <div className="min-h-screen w-full relative text-slate-900 font-[Inter]">
+      <SceneBackground />
+
+      <header className="relative z-10 flex items-center justify-between px-6 md:px-12 lg:px-20 py-5">
+        <div className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur px-3 py-1.5 shadow ring-1 ring-white/50">
+          <span className="text-sm font-semibold bg-gradient-to-r from-fuchsia-500 via-amber-400 to-sky-500 bg-clip-text text-transparent">Fantasy PPT Maker</span>
         </div>
-      </div>
+        <a
+          href="#editor"
+          className="rounded-full bg-white/70 backdrop-blur px-4 py-1.5 text-sm font-medium shadow hover:bg-white"
+        >
+          Mulai Tulis Cerita
+        </a>
+      </header>
+
+      <main className="pb-24">
+        <TitleSlide />
+        <HeroCharacter />
+
+        <div id="editor" />
+        <StoryEditor onGenerateSlides={setSlides} />
+        <SlideViewer slides={slides} />
+      </main>
+
+      <footer className="relative z-10 py-8 text-center text-white/80">
+        Dibuat untuk presentasi fantasi bergerak dengan warna cerah & kontras.
+      </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
